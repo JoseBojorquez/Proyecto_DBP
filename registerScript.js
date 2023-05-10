@@ -11,7 +11,12 @@ function post(){
     if(email.value != null && firstname.value != null && lastname.value != null && password.value != null && confirmpassword.value != null){
         if(isEmpty(email.value) == 0 && isEmpty(firstname.value) == 0 && isEmpty(lastname.value) == 0 && isEmpty(password.value) == 0 && isEmpty(confirmpassword.value) == 0){
             if(password.value == confirmpassword.value){
-                postUser();
+                postUser(email.value, password.value, firstname.value, lastname.value);
+                email.value = "";
+                password.value = "";
+                confirmpassword.value = "";
+                firstname.value = "";
+                lastname.value = "";
             }
         }
     }
@@ -21,7 +26,7 @@ function isEmpty(str) {
     return !str.trim().length;
 }
 
-async function postUser() {
+async function postUser(emailSubmit, passwordSubmit, firstnameSubmit, lastnameSubmit) {
     const response = await fetch("http://localhost:8000/users/", {
         method: 'POST',
         headers: {
@@ -29,10 +34,10 @@ async function postUser() {
             'Content-Type': 'application/json'
         },
         body: `{
-            "email": "${email.value}",
-            "password": "${password.value}",
-            "firstname": "${firstname.value}",
-            "lastname": "${lastname.value}"
+            "email": "${emailSubmit}",
+            "password": "${passwordSubmit}",
+            "firstname": "${firstnameSubmit}",
+            "lastname": "${lastnameSubmit}"
         }`,
     });
 
